@@ -1,0 +1,59 @@
+.reveal p {
+	font-family: serif;
+	font-size: 32px;
+}
+
+.reveal .left {
+	float: left;
+	width: 48%;
+}
+
+.reveal .right {
+	float: right;
+	width: 48%;
+}
+
+.reveal .center {
+	/*float: left;
+	width: 50%;
+	margin-left: -25%;*/
+	margin-right: auto;
+	margin-left: auto;
+	width: 100%;
+	position:absolute;
+}
+
+.reveal td.centerAlign {
+	text-align: center;
+}
+
+.reveal .text-center {
+	text-align: center;
+}
+
+.reveal section img.github, .reveal section img.diagrams {
+	border: none;
+	box-shadow: none;
+	margin: 0;
+}
+
+.reveal section img#trouble {
+	height: 450px;
+}
+
+.reveal section img#initialize {
+	height: 200px;
+}
+
+.reveal section img.splunkjquery {
+	height: 300px;
+}
+
+.reveal pre code.javascript {
+	max-height: auto;
+}
+
+.reveal iframe {
+	width: 600px;
+	height: 500px;
+}
