@@ -60,8 +60,17 @@
 	margin-bottom: 10px;
 }
 .reveal .cost {
-	font-family: serif;
+	/*font-family: serif;*/
 	font-size: 20px;
 	line-height: 24px;
 	margin-bottom: 5px;
+}
+
+.reveal text {
+	font-size: 16px;
+}
+
+.reveal .domain {
+	fill: none;
+	stroke: #666;
 }

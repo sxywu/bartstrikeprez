@@ -4,23 +4,28 @@ define([
     "backbone",
     "d3",
     "app/collections/Costs.Collection",
-    "text!app/templates/CostsList.Template.html"
+    "text!app/templates/CostsList.Template.html",
+    "app/visualizations/Costs.Visualization"
 ], function(
     $,
     _,
     Backbone,
     d3,
     CostsCollection,
-    CostsListTemplate
+    CostsListTemplate,
+    CostsVisualization
 ) {
     return Backbone.View.extend({
         initialize: function() {
             this.costs = new CostsCollection();
+            this.costsChart = new CostsVisualization();
 
             this.costs.on("reset", _.bind(this.renderCosts, this));
+            this.costs.on("reset", _.bind(this.updateCostsChart, this));
         },
         render: function() {
             this.costs.fetch();
+            this.costsChart($("#costsSVG")[0]);
         },
         renderCosts: function() {
             var byCity = {},
@@ -57,6 +62,9 @@ define([
                 });
             $("#costsList").html(_.template(CostsListTemplate, {data: byCity}));
         },
+        updateCostsChart: function() {
+
+        }
         // renderCost: function(model) {
 
         // }
