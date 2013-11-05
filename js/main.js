@@ -42,7 +42,9 @@ require([
 ) {
     app = {};
     app.colors = {BART: "#2667B7", Union: "#F48512", other: "#cfcfcf",
-        darkGreen: "#859900", green: "#BEF202", red: "#dc322f"
+        darkGreen: "#859900", green: "#BEF202", red: "#dc322f",
+        "Oakland, Fremont": "#002b36", "San Francisco": "#93a1a1",
+        "San Jose, Sunnyvale, Santa Clara": "#073642", "Vallejo/Fairfield": "#839496"
         // 1P1C: "#d33682", 1P2C: "#268bd2", 1P3C: "#859900", 2P1C: "#dc322f", 2P2C: "#6c71c4", 2P3C: "#2aa198"
     };
     app.editable = false; // when editing line chart

@@ -26,7 +26,6 @@ define([
             svg = d3.select(selection);
             $svg = $(selection);
             width = $svg.width();
-            // height = $svg.height();
 
             x = d3.scale.ordinal()
                     .domain(["1P1C", "1P2C", "1P3C", "2P1C", "2P2C", "2P3C"])
@@ -56,7 +55,6 @@ define([
         }
 
         CostsChart.update = function() {
-            console.log(data);
             groups = svg.selectAll("g.types")
                 .data(data).enter().append("g")
                 .classed("types", true)
@@ -73,7 +71,7 @@ define([
                 .attr("y", function(d) {return height - y(d.total)})
                 .attr("width", barWidth)
                 .attr("height", function(d) {return y(d.total)})
-                .attr("fill", "#666");
+                .attr("fill", function(d) {return app.colors[d.City]});
 
         }
 
