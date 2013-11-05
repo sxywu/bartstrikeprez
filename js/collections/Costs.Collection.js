@@ -14,6 +14,9 @@ define([
         "San Francisco, CA HUD Metro FMR Area": "San Francisco",
         "San Jose-Sunnyvale-Santa Clara, CA HUD Metro FMR Area": "San Jose, Sunnyvale, Santa Clara",
         "Vallejo-Fairfield, CA MSA": "Vallejo/Fairfield"
+    }
+    currencyToInt = function(curr) {
+        return Number(curr.replace(/[^0-9\.]+/g,""));
     };
     return Backbone.Collection.extend({
         fetch: function() {
@@ -31,6 +34,21 @@ define([
                     }).value();
                 that.reset(costs);
             });
+        },
+        getMin: function() {
+            return this.chain()
+                .map(function(model) {
+                    return currencyToInt(model.get("Annual Total"));
+                }).min().value();
+        },
+        getMax: function() {
+            return this.chain()
+                .map(function(model) {
+                    return currencyToInt(model.get("Annual Total"));
+                }).max().value();
+        },
+        byCity: function() {
+            
         }
     });
 })

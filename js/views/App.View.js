@@ -21,28 +21,22 @@ define([
             this.costsChart = new CostsVisualization();
 
             this.costs.on("reset", _.bind(this.renderCosts, this));
-            this.costs.on("reset", _.bind(this.updateCostsChart, this));
         },
         render: function() {
             this.costs.fetch();
             this.costsChart($("#costsSVG")[0]);
         },
         renderCosts: function() {
+            var min = this.costs.getMin(),
+                max = this.costs.getMax();
+            this.renderCostsList(min, max);
+            this.updateCostsChart(min, max);
+        },
+        renderCostsList: function(min, max) {
             var byCity = {},
-                min = this.costs.chain()
-                    .map(function(model) {
-                        return Number(model.get("Annual Total").replace(/[^0-9\.]+/g,""));
-                    }).min().value(),
-                max = this.costs.chain()
-                    .map(function(model) {
-                        return Number(model.get("Annual Total").replace(/[^0-9\.]+/g,""));
-                    }).max().value(),
                 opacity = d3.scale.linear()
                     .domain([min, max])
-                    .range([0.45, 1]),
-                weight = d3.scale.linear()
-                    .domain([min, max])
-                    .range([500, 500]);
+                    .range([0.45, 1]);
             this.costs.chain()
                 .groupBy(function(model) {
                     return model.get("City");
@@ -55,18 +49,28 @@ define([
                         obj.Total = model.get("Annual Total");
                         obj.total = Number(obj.Total.replace(/[^0-9\.]+/g,""));
                         obj.opacity = opacity(obj.total);
-                        obj.weight = Math.round(weight(obj.total) / 100) * 100;
                         return obj;
                     });
                     byCity[key] = mapped;
                 });
             $("#costsList").html(_.template(CostsListTemplate, {data: byCity}));
         },
-        updateCostsChart: function() {
+        updateCostsChart: function(min, max) {
+            var data = this.costs.chain()
+                .map(function(model) {
+                    var obj = {};
+                    obj.cid = model.cid;
+                    obj.TYPE = model.get("TYPE");
+                    obj.City = model.get("City");
+                    obj.Total = model.get("Annual Total");
+                    obj.total = Number(obj.Total.replace(/[^0-9\.]+/g,""));
+                    return obj;
+                }).groupBy(function(obj) {
+                    return obj.TYPE;
+                }).values().value();
 
+            this.costsChart.data(data);
+            this.costsChart.update();
         }
-        // renderCost: function(model) {
-
-        // }
     });
 })
