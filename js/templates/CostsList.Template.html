@@ -1,7 +1,7 @@
 
 <% _.each(data, function(array, key) { %>
 <div class="costs">
-    <div class="city"><%= key %></div>
+    <div class="city" style="color: <%= app.colors[key] %>"><%= key %></div>
     <% _.each(array, function(obj) { %>
         <div class="cost" id="cost_<%= obj.cid %>" 
             style="opacity:<%= obj.opacity %>;font-weight:<%= obj.weight %>">

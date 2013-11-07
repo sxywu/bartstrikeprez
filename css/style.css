@@ -50,7 +50,7 @@
 /* elements */
 .reveal .costs {
 	float: left;
-	width: 48%;
+	width: 25%;
 	margin-bottom: 20px;
 }
 .reveal .city {
@@ -70,7 +70,13 @@
 	font-size: 16px;
 }
 
-.reveal .domain {
+.reveal .xAxis path,
+.reveal .xAxis line {
 	fill: none;
 	stroke: #666;
+	shape-rendering: crispEdges;
+}
+
+.reveal #costsSVG {
+	height: 300px;
 }

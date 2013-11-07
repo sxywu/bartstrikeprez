@@ -13,9 +13,9 @@ define([
         var svg, $svg, xAxis, yAxis,
             groups, bars,
             data = [],
-            max = 125000,
-            padding = {top: 25, left: 75, right: 25},
-            width, height = 500, x, y,
+            max = 105000,
+            padding = {top: 25, left: 75, right: 75},
+            width, height = 275, x, y,
             barWidth = 10
             barPadding = 2;
 
@@ -48,10 +48,10 @@ define([
                 .classed("xAxis", true)
                 .call(xAxis)
                 .selectAll("text");
-            var yAxisG = svg.append("g")
-                .attr("transform", "translate(" + padding.left + ", " + padding.top + ")")
-                .classed("yAxis", true)
-                .call(yAxis);
+            // var yAxisG = svg.append("g")
+            //     .attr("transform", "translate(" + padding.left + ", " + padding.top + ")")
+            //     .classed("yAxis", true)
+            //     .call(yAxis);
         }
 
         CostsChart.update = function() {
@@ -59,7 +59,7 @@ define([
                 .data(data).enter().append("g")
                 .classed("types", true)
                 .attr("transform", function(d, i) {
-                    var groupWidth = ((width - padding.left - padding.right) / 6) / 2,
+                    var groupWidth = (barWidth * 4 + barPadding * 3) / 2,
                         left = x(d[0].TYPE) + padding.left - groupWidth;
                     console.log(groupWidth)
                     return "translate(" + left + ",0)";
