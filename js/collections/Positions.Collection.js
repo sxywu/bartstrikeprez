@@ -13,7 +13,18 @@ define([
         fetch: function() {
             var that = this;
             d3.csv("data/bart-comp-all.csv", function(response) {
-                var positions = [];
+                var positions = [],
+                    histogram = _.map(response, function(position) {
+                            var obj = {};
+                            obj.union = position.Union;
+                            obj.base = parseInt(position.Base);
+                            obj.other = parseInt(position.Other);
+                            obj.pension = parseInt(position.EE) + parseInt(position.ER);
+                            obj.medical = parseInt(position.MDV);
+                            obj.total = obj.base + obj.other + obj.pension + obj.medical;
+
+                            return obj;
+                        });
 
                 // get union workers
                 _.chain(response)
@@ -26,7 +37,7 @@ define([
                     }).each(function(val, key) {
                         if (val.length > 50) {
                             var obj = {};
-                            obj.title = key.replace(" ", "_");
+                            obj.title = key;
                             obj.base = d3.mean(_.pluck(val, "Base"));
                             obj.other = d3.mean(_.pluck(val, "Other"));
                             obj.pension = (d3.mean(_.pluck(val, "EE")) + d3.mean(_.pluck(val, "ER"))) / 2;
@@ -36,6 +47,7 @@ define([
                         }
                     });
 
+                that.histogram = histogram;
                 that.reset(positions);
             });
         },
@@ -67,6 +79,28 @@ define([
           });            
           
           return bars;
+        },
+        processHistogram: function() {
+            var histogram = {},
+                keys = ["ATU", "SEIU", "AFSCME"];
+
+            _.chain(this.histogram)
+                .groupBy(function(position) {
+                    return Math.round(position.base / 10000) * 10000;
+                }).each(function(val, key) {
+                    var unions = _.chain(val)
+                        .countBy(function(v) {
+                            return v.union;
+                        }).reduce(function(memo, val, key) {
+                            return memo + (_.contains(keys, key) ? val : 0);
+                        }, 0).value(),
+                        others = val.length - unions;
+                    histogram[key] = {bars: [{name: "unions", bar: unions}, 
+                        {name: "others", bar: others}], 
+                        key: key}
+                }).value();
+
+            return histogram;
         }
     });
 });

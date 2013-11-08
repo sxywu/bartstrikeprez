@@ -67,7 +67,6 @@ define([
         }
 
         stackedBar.update = function(duration) {
-            console.log(titles);
             x.domain(titles);
             bars = svg.selectAll("g.bars")
                 .data(data).enter().append("g")

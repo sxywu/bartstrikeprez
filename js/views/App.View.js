@@ -8,7 +8,8 @@ define([
     "app/visualizations/Costs.Visualization",
     "app/collections/Positions.Collection",
     "text!app/templates/PositionsList.Template.html",
-    "app/visualizations/Positions.Visualization"
+    "app/visualizations/Positions.Visualization",
+    "app/visualizations/Histogram.Visualization"
 ], function(
     $,
     _,
@@ -19,7 +20,8 @@ define([
     CostsVisualization,
     PositionsCollection,
     PositionsListTemplate,
-    PositionsVisualization
+    PositionsVisualization,
+    HistogramVisualization
 ) {
     return Backbone.View.extend({
         initialize: function() {
@@ -27,6 +29,7 @@ define([
             this.costsChart = new CostsVisualization();
             this.positions = new PositionsCollection();
             this.positionsChart = new PositionsVisualization();
+            this.histogramChart = new HistogramVisualization();
 
             this.costs.on("reset", _.bind(this.renderCosts, this));
             this.positions.on("reset", _.bind(this.renderPositions, this));
@@ -37,6 +40,8 @@ define([
 
             this.positions.fetch();
             this.positionsChart($("#positionsSVG")[0]);
+
+            this.histogramChart($("#histogramSVG")[0]);
         },
         renderCosts: function() {
             var min = this.costs.getMin(),
@@ -89,13 +94,18 @@ define([
                 data: this.positions.toJSON()
             }));
 
-            this.renderPositionsSVG();
+            this.renderPositionsChart();
+            this.renderHistogram();
         },
-        renderPositionsSVG: function() {
+        renderPositionsChart: function() {
             var titles = this.positions.pluck("title"),
                 data = this.positions.processData();
             this.positionsChart.titles(titles).data(data)
                 .legend().update();
+        },
+        renderHistogram: function() {
+            var data = this.positions.processHistogram();
+            this.histogramChart.data(data).update();
         }
     });
 })

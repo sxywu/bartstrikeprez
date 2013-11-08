@@ -45,10 +45,11 @@ require([
         darkGreen: "#859900", green: "#BEF202", red: "#dc322f",
         "Oakland, Fremont": "#80BCA3", "San Francisco": "#E6AC27",
         "San Jose, Sunnyvale, Santa Clara": "#655643", "Vallejo/Fairfield": "#BF4D28",
-        "Station_Agent":"#655643","Transit_Vehicle Electronic Technician":"#80BCA3",
-        "Train_Control Electronic Technician":"#E6AC27","Electrician":"#BF4D28",
-        "Transit_Vehicle Mechanic":"#928941","Train_Operator":"#CC982A",
-        "System_Service Worker":"#A7321C","Utility_Worker":"#352504"
+        "Station Agent":"#655643","Transit Vehicle Electronic Technician":"#80BCA3",
+        "Train Control Electronic Technician":"#E6AC27","Electrician":"#BF4D28",
+        "Transit Vehicle Mechanic":"#928941","Train Operator":"#CC982A",
+        "System Service Worker":"#A7321C","Utility Worker":"#352504",
+        unions: "#E6AC27", others: "#BF4D28"
         // 1P1C: "#d33682", 1P2C: "#268bd2", 1P3C: "#859900", 2P1C: "#dc322f", 2P2C: "#6c71c4", 2P3C: "#2aa198"
     };
     app.editable = false; // when editing line chart
