@@ -20,8 +20,6 @@ define([
             svg, groups, rects,
             x, y, xAxis, yAxis, xAxisG, yAxisG;
 
-        
-
         function Histogram(selection) {
             svg = d3.select(selection);
             width = $(selection).width();
