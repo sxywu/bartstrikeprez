@@ -9,7 +9,8 @@ define([
     "app/collections/Positions.Collection",
     "text!app/templates/PositionsList.Template.html",
     "app/visualizations/Positions.Visualization",
-    "app/visualizations/Histogram.Visualization"
+    "app/visualizations/Histogram.Visualization",
+    "bootstrap"
 ], function(
     $,
     _,
@@ -137,6 +138,13 @@ define([
             this.costsPositionsChart.cost(cost).updateCost();
             console.log(cid, cost);
             return false;
+        },
+        events: {
+            "click .reveal .mock2": "enlargeMock"
+        },
+        enlargeMock: function() {
+            console.log("modal");
+            $("#modalMock").modal("show");
         }
     });
 })

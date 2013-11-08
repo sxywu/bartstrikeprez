@@ -102,3 +102,21 @@
 	margin: 8px 0;
 	font-size: 20px;
 }
+
+.reveal .mock {
+	width: 50%;
+}
+
+.reveal table {
+	width: 100%;
+}
+.reveal table td, .reveal table th {
+	text-align: center;
+	padding: 0 20px 30px 20px;
+
+}
+
+.reveal table td {
+	line-height: 28px;
+	font-size: 24px;
+}

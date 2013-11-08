@@ -27,6 +27,8 @@ define([
             svg = d3.select(selection);
             width = $(selection).width();
 
+            console.log(width);
+
             x = d3.scale.ordinal()
                     .domain(titles)
                     .rangePoints([0, width - padding.left - padding.right]);
