@@ -94,7 +94,8 @@ define([
         renderPositionsSVG: function() {
             var titles = this.positions.pluck("title"),
                 data = this.positions.processData();
-            this.positionsChart.titles(titles).data(data).update();
+            this.positionsChart.titles(titles).data(data)
+                .legend().update();
         }
     });
 })
