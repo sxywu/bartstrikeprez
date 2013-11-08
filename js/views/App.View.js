@@ -5,7 +5,10 @@ define([
     "d3",
     "app/collections/Costs.Collection",
     "text!app/templates/CostsList.Template.html",
-    "app/visualizations/Costs.Visualization"
+    "app/visualizations/Costs.Visualization",
+    "app/collections/Positions.Collection",
+    "text!app/templates/PositionsList.Template.html",
+    "app/visualizations/Positions.Visualization"
 ], function(
     $,
     _,
@@ -13,18 +16,27 @@ define([
     d3,
     CostsCollection,
     CostsListTemplate,
-    CostsVisualization
+    CostsVisualization,
+    PositionsCollection,
+    PositionsListTemplate,
+    PositionsVisualization
 ) {
     return Backbone.View.extend({
         initialize: function() {
             this.costs = new CostsCollection();
             this.costsChart = new CostsVisualization();
+            this.positions = new PositionsCollection();
+            this.positionsChart = new PositionsVisualization();
 
             this.costs.on("reset", _.bind(this.renderCosts, this));
+            this.positions.on("reset", _.bind(this.renderPositions, this));
         },
         render: function() {
             this.costs.fetch();
             this.costsChart($("#costsSVG")[0]);
+
+            this.positions.fetch();
+            this.positionsChart($("#positionsSVG")[0]);
         },
         renderCosts: function() {
             var min = this.costs.getMin(),
@@ -71,6 +83,18 @@ define([
 
             this.costsChart.data(data);
             this.costsChart.update();
+        },
+        renderPositions: function() {
+            $("#positionsList").html(_.template(PositionsListTemplate, {
+                data: this.positions.toJSON()
+            }));
+
+            this.renderPositionsSVG();
+        },
+        renderPositionsSVG: function() {
+            var titles = this.positions.pluck("title"),
+                data = this.positions.processData();
+            this.positionsChart.titles(titles).data(data).update();
         }
     });
 })
