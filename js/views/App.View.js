@@ -29,6 +29,7 @@ define([
             this.costsChart = new CostsVisualization();
             this.positions = new PositionsCollection();
             this.positionsChart = new PositionsVisualization();
+            this.costsPositionsChart = new PositionsVisualization();
             this.histogramChart = new HistogramVisualization();
 
             this.costs.on("reset", _.bind(this.renderCosts, this));
@@ -40,6 +41,7 @@ define([
 
             this.positions.fetch();
             this.positionsChart($("#positionsSVG")[0]);
+            this.costsPositionsChart($("#costsPositionsSVG")[0]);
 
             this.histogramChart($("#histogramSVG")[0]);
         },
@@ -48,6 +50,10 @@ define([
                 max = this.costs.getMax();
             this.renderCostsList(min, max);
             this.updateCostsChart(min, max);
+
+            // $("#costsList2 .cost").mouseover(_.bind(this.mouseoverCost, this));
+            // $("#costsList2 .cost").mouseout(_.bind(this.mouseleaveCost, this));
+            $("#costsList2 .cost").click(_.bind(this.clickCost, this));
         },
         renderCostsList: function(min, max) {
             var byCity = {},
@@ -71,6 +77,7 @@ define([
                     byCity[key] = mapped;
                 });
             $("#costsList").html(_.template(CostsListTemplate, {data: byCity}));
+            $("#costsList2").html(_.template(CostsListTemplate, {data: byCity}));
         },
         updateCostsChart: function(min, max) {
             var data = this.costs.chain()
@@ -86,8 +93,7 @@ define([
                     return obj.TYPE;
                 }).values().value();
 
-            this.costsChart.data(data);
-            this.costsChart.update();
+            this.costsChart.data(data).update();
         },
         renderPositions: function() {
             $("#positionsList").html(_.template(PositionsListTemplate, {
@@ -99,13 +105,34 @@ define([
         },
         renderPositionsChart: function() {
             var titles = this.positions.pluck("title"),
-                data = this.positions.processData();
+                data = this.positions.processData(),
+                cost = this.costs.getFirstCost();
             this.positionsChart.titles(titles).data(data)
                 .legend().update();
+            this.costsPositionsChart.titles(titles).data(data)
+                .legend().update().cost(cost).renderCost();
         },
         renderHistogram: function() {
             var data = this.positions.processHistogram();
             this.histogramChart.data(data).update();
+        },
+        mouseoverCost: function(e) {
+            $(e.target).addClass("clicked");
+            return false;
+        },
+        mouseleave: function(e) {
+            $(e.target).removeClass("clicked");
+            return false;
+        },
+        clickCost: function(e) {
+            $("#costsList2 .cost").removeClass("clicked");
+            $(e.target).addClass("clicked");
+
+            var cid = $(e.target).attr("id").replace("cost_", ""),
+                cost = this.costs.getCostByCid(cid);
+            this.costsPositionsChart.cost(cost).updateCost();
+            console.log(cid, cost);
+            return false;
         }
     });
 })

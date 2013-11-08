@@ -10,14 +10,15 @@ define([
     tip
 ) {
     return function() {
-        var data, titles = [],
+        var data, cost, titles = [],
             max = 110000,
             width,
             barWidth = 13,
             height = 325,
             barPadding = .5,
+            duration = 750,
             padding = {top: 45, left: 75, right: 20},
-            svg, bars, rects, legend,
+            svg, bars, rects, legend, line, circles,
             x, y, xAxis, yAxis, xAxisG, yAxisG;
 
         
@@ -66,7 +67,7 @@ define([
             return stackedBar;
         }
 
-        stackedBar.update = function(duration) {
+        stackedBar.update = function() {
             x.domain(titles);
             bars = svg.selectAll("g.bars")
                 .data(data).enter().append("g")
@@ -83,6 +84,36 @@ define([
                 .attr("opacity", function(d) {return d.opacity})
                 .attr("fill", function(d) {return app.colors[d.position]})
                 .attr("stroke", "none");
+
+            return stackedBar;
+        }
+        
+        stackedBar.renderCost = function() {
+            line = svg.append("line").attr("x1", padding.left)
+                .attr("x2", width + padding.right)
+                .attr("y1", height - y(cost))
+                .attr("y2", height - y(cost))
+                .attr("stroke", "#BF4D28");
+
+            circles = svg.selectAll("circle.dot")
+                .data(data).enter().append("circle")
+                .classed("dot", true)
+                .attr("cx", function(d) {
+                    return x(d.title) + padding.left + barWidth;
+                }).attr("cy", height - y(cost))
+                .attr("r", 3)
+                .attr("fill", "#BF4D28");
+
+            return stackedBar;
+        }
+
+        stackedBar.updateCost = function() {
+            line.transition().duration(duration)
+                .attr("y1", height - y(cost))
+                .attr("y2", height - y(cost));
+
+            circles.transition().duration(duration)
+                .attr("cy", height - y(cost));
 
             return stackedBar;
         }
@@ -115,6 +146,12 @@ define([
         stackedBar.data = function(value) {
             if (!arguments.length) return data;
             data = value;
+            return stackedBar;
+        }
+
+        stackedBar.cost = function(value) {
+            if (!arguments.length) return cost;
+            cost = value;
             return stackedBar;
         }
 

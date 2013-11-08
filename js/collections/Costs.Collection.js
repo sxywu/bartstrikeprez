@@ -47,8 +47,11 @@ define([
                     return currencyToInt(model.get("Annual Total"));
                 }).max().value();
         },
-        byCity: function() {
-            
+        getFirstCost: function() {
+            return currencyToInt(this.at(0).get("Annual Total"));
+        },
+        getCostByCid: function(cid) {
+            return currencyToInt(this.get(cid).get("Annual Total"));
         }
     });
 })

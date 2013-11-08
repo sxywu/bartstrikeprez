@@ -5,8 +5,8 @@
     <% _.each(array, function(obj) { %>
         <div class="cost" id="cost_<%= obj.cid %>" 
             style="opacity:<%= obj.opacity %>;font-weight:<%= obj.weight %>">
-            <span class="type"><%= obj.TYPE %></span>: 
-            <span class="total"><%= obj.Total %></span>
+            <%= obj.TYPE %>: 
+            <%= obj.Total %>
         </div>
     <% }) %>
 </div>
