@@ -5,7 +5,6 @@
 
 .reveal p {
 	font-size: 32px;
-	font-family: serif;
 }
 
 .reveal .left {
@@ -62,11 +61,11 @@
 	width: 25%;
 	margin-bottom: 20px;
 }
-
+/*
 .reveal #costsList2 .costs {
 	width: 50%;
 }
-
+*/
 .reveal .city {
 	font-size: 24px;
 	line-height: 30px;
@@ -100,6 +99,6 @@
 }
 
 .reveal .position {
-	margin: 10px 0;
+	margin: 8px 0;
 	font-size: 20px;
 }

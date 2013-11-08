@@ -17,7 +17,7 @@ define([
             height = 325,
             barPadding = .5,
             duration = 750,
-            padding = {top: 45, left: 75, right: 20},
+            padding = {top: 45, left: 75, right: 75},
             svg, bars, rects, legend, line, circles,
             x, y, xAxis, yAxis, xAxisG, yAxisG;
 
@@ -89,8 +89,8 @@ define([
         }
         
         stackedBar.renderCost = function() {
-            line = svg.append("line").attr("x1", padding.left)
-                .attr("x2", width + padding.right)
+            line = svg.append("line").attr("x1", 0)
+                .attr("x2", width)
                 .attr("y1", height - y(cost))
                 .attr("y2", height - y(cost))
                 .attr("stroke", "#BF4D28");
@@ -124,16 +124,16 @@ define([
 
             legend.selectAll("rect").data(data[0].parts).enter().append("rect")
                 .attr("x", function(d, i) {
-                    return i * (width - padding.left) / 4;
+                    return i * (width - padding.left - padding.right) / 4;
                 }).attr("y", 0)
-                .attr("width", (width - padding.left) / 4)
+                .attr("width", (width - padding.left - padding.right) / 4)
                 .attr("height", barWidth)
                 .attr("fill", "#655643")
                 .attr("opacity", function(d) {return d.opacity});
 
             legend.selectAll("text").data(data[0].parts).enter().append("text")
                 .attr("x", function(d, i) {
-                    return i * (width - padding.left) / 4;
+                    return i * (width - padding.left - padding.right) / 4;
                 }).attr("y", barWidth)
                 .attr("text-anchor", "start")
                 .attr("dy", "1em")

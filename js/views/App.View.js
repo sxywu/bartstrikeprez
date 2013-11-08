@@ -78,6 +78,7 @@ define([
                 });
             $("#costsList").html(_.template(CostsListTemplate, {data: byCity}));
             $("#costsList2").html(_.template(CostsListTemplate, {data: byCity}));
+            $("#costsList2 .city").css("color", "#655643");
         },
         updateCostsChart: function(min, max) {
             var data = this.costs.chain()
@@ -97,6 +98,9 @@ define([
         },
         renderPositions: function() {
             $("#positionsList").html(_.template(PositionsListTemplate, {
+                data: this.positions.toJSON()
+            }));
+            $("#positionsList2").html(_.template(PositionsListTemplate, {
                 data: this.positions.toJSON()
             }));
 
