@@ -17,7 +17,12 @@ define([
             padding = {top: 25, left: 75, right: 75},
             width, height = 275, x, y,
             barWidth = 10
-            barPadding = 2;
+            barPadding = 2,
+            tip = d3.tip().attr('class', 'd3-tip')
+                .direction("n")
+                .html(function(d) {
+                    return d.TYPE + " in " + d.City + ": " + d.Total;
+                });
 
         /*
             set up the initial chart
@@ -48,10 +53,6 @@ define([
                 .classed("xAxis", true)
                 .call(xAxis)
                 .selectAll("text");
-            // var yAxisG = svg.append("g")
-            //     .attr("transform", "translate(" + padding.left + ", " + padding.top + ")")
-            //     .classed("yAxis", true)
-            //     .call(yAxis);
         }
 
         CostsChart.update = function() {
@@ -71,7 +72,10 @@ define([
                 .attr("y", function(d) {return height - y(d.total)})
                 .attr("width", barWidth)
                 .attr("height", function(d) {return y(d.total)})
-                .attr("fill", function(d) {return app.colors[d.City]});
+                .attr("fill", function(d) {return app.colors[d.City]})
+                .call(tip)
+                .on("mouseover", tip.show)
+                .on("mouseleave", tip.hide);
 
         }
 
