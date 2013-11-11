@@ -10,6 +10,8 @@ define([
     "text!app/templates/PositionsList.Template.html",
     "app/visualizations/Positions.Visualization",
     "app/visualizations/Histogram.Visualization",
+    "app/collections/Proposals.Collection",
+    "app/visualizations/Proposals.Visualization",
     "bootstrap"
 ], function(
     $,
@@ -22,7 +24,9 @@ define([
     PositionsCollection,
     PositionsListTemplate,
     PositionsVisualization,
-    HistogramVisualization
+    HistogramVisualization,
+    ProposalsCollection,
+    ProposalsVisualization
 ) {
     return Backbone.View.extend({
         initialize: function() {
@@ -32,9 +36,17 @@ define([
             this.positionsChart = new PositionsVisualization();
             this.costsPositionsChart = new PositionsVisualization();
             this.histogramChart = new HistogramVisualization();
+            this.proposals = new ProposalsCollection();
+            this.augustChart = new ProposalsVisualization();
+            this.octoberChart = new ProposalsVisualization();
+            this.proposalCharts = {
+                August: this.augustChart,
+                October: this.octoberChart
+            }
 
             this.costs.on("reset", _.bind(this.renderCosts, this));
             this.positions.on("reset", _.bind(this.renderPositions, this));
+            this.proposals.on("reset", _.bind(this.renderProposals, this));
         },
         render: function() {
             this.costs.fetch();
@@ -45,6 +57,10 @@ define([
             this.costsPositionsChart($("#costsPositionsSVG")[0]);
 
             this.histogramChart($("#histogramSVG")[0]);
+
+            this.proposals.fetch();
+            this.augustChart($("#AugustSVG")[0]);
+            this.octoberChart($("#OctoberSVG")[0]);
         },
         renderCosts: function() {
             var min = this.costs.getMin(),
@@ -121,13 +137,13 @@ define([
             var data = this.positions.processHistogram();
             this.histogramChart.data(data).update();
         },
-        mouseoverCost: function(e) {
-            $(e.target).addClass("clicked");
-            return false;
-        },
-        mouseleave: function(e) {
-            $(e.target).removeClass("clicked");
-            return false;
+        renderProposals: function() {
+            var data = this.proposals.getLineData(),
+                that = this;
+            _.each(data, function(val, key) {
+                var chart = that.proposalCharts[key];
+                chart.data(val).update();
+            });
         },
         clickCost: function(e) {
             $("#costsList2 .cost").removeClass("clicked");
