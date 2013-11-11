@@ -22,7 +22,7 @@ define([
                             obj.other = parseInt(position.Other);
                             obj.pension = parseInt(position.EE) + parseInt(position.ER);
                             obj.medical = parseInt(position.MDV);
-                            obj.total = obj.base + obj.other + obj.pension + obj.medical;
+                            obj.total = obj.base + obj.overtime + obj.other + obj.pension + obj.medical;
 
                             return obj;
                         });
@@ -44,7 +44,7 @@ define([
                             obj.other = d3.mean(_.pluck(val, "Other"));
                             obj.pension = (d3.mean(_.pluck(val, "EE")) + d3.mean(_.pluck(val, "ER"))) / 2;
                             obj.medical = d3.mean(_.pluck(val, "MDV"));
-                            obj.total = obj.base + obj.other + obj.pension + obj.medical;
+                            obj.total = obj.base + obj.overtime + obj.other + obj.pension + obj.medical;
                             positions.push(obj);
                         }
                     });
