@@ -66,6 +66,18 @@
 	width: 50%;
 }
 */
+.reveal .histogramLabel {
+	font-size: 20px;
+}
+
+.reveal .union {
+	color: #E6AC27;
+}
+
+.reveal .nonunion {
+	color: #BF4D28;
+}
+
 .reveal .city {
 	font-size: 24px;
 	line-height: 30px;
