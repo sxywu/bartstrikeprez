@@ -126,16 +126,16 @@ define([
 
             legend.selectAll("rect").data(data[0].parts).enter().append("rect")
                 .attr("x", function(d, i) {
-                    return i * (width - padding.left - padding.right) / 4;
+                    return i * (width - padding.left - padding.right) / 4.5;
                 }).attr("y", 0)
-                .attr("width", (width - padding.left - padding.right) / 4)
+                .attr("width", (width - padding.left - padding.right) / 4.5)
                 .attr("height", barWidth)
                 .attr("fill", "#655643")
                 .attr("opacity", function(d) {return d.opacity});
 
             legend.selectAll("text").data(data[0].parts).enter().append("text")
                 .attr("x", function(d, i) {
-                    return i * (width - padding.left - padding.right) / 4;
+                    return i * (width - padding.left - padding.right) / 4.5;
                 }).attr("y", barWidth)
                 .attr("text-anchor", "start")
                 .attr("dy", "1em")

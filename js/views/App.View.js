@@ -96,6 +96,7 @@ define([
             $("#costsList").html(_.template(CostsListTemplate, {data: byCity}));
             $("#costsList2").html(_.template(CostsListTemplate, {data: byCity}));
             $("#costsList2 .city").css("color", "#655643");
+            $("#costsList2 .cost:first").addClass("clicked");
         },
         updateCostsChart: function(min, max) {
             var data = this.costs.chain()

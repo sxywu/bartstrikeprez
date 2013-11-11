@@ -50,6 +50,22 @@
 	color: #655643;
 }
 
+.reveal .union {
+	color: #F48512;
+}
+
+.reveal .nonunion {
+	color: #BF4D28;
+}
+
+.reveal .BART {
+	color: #2667B7;
+}
+
+.reveal .Union {
+	color: #F48512;
+}
+
 .reveal #costsList2 .clicked {
 	border-bottom: 2px solid #BF4D28;
 }
@@ -61,21 +77,13 @@
 	width: 25%;
 	margin-bottom: 20px;
 }
-/*
-.reveal #costsList2 .costs {
-	width: 50%;
+
+.reveal #costsList2 .cost {
+	cursor: pointer;	
 }
-*/
+
 .reveal .histogramLabel {
 	font-size: 20px;
-}
-
-.reveal .union {
-	color: #E6AC27;
-}
-
-.reveal .nonunion {
-	color: #BF4D28;
 }
 
 .reveal .city {

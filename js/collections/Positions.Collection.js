@@ -18,6 +18,7 @@ define([
                             var obj = {};
                             obj.union = position.Union;
                             obj.base = parseInt(position.Base);
+                            obj.overtime = parseInt(position.OT);
                             obj.other = parseInt(position.Other);
                             obj.pension = parseInt(position.EE) + parseInt(position.ER);
                             obj.medical = parseInt(position.MDV);
@@ -39,6 +40,7 @@ define([
                             var obj = {};
                             obj.title = key;
                             obj.base = d3.mean(_.pluck(val, "Base"));
+                            obj.overtime = d3.mean(_.pluck(val, "OT"));
                             obj.other = d3.mean(_.pluck(val, "Other"));
                             obj.pension = (d3.mean(_.pluck(val, "EE")) + d3.mean(_.pluck(val, "ER"))) / 2;
                             obj.medical = d3.mean(_.pluck(val, "MDV"));
@@ -52,7 +54,7 @@ define([
             });
         },
         processData: function() {
-          var order = ["base", "other", "pension", "medical"],
+          var order = ["base", "overtime", "other", "pension", "medical"],
               starting = 0,
               opacity = 1 / order.length,
               bars = [];
