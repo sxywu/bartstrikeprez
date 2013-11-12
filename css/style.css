@@ -70,6 +70,10 @@
 	border-bottom: 2px solid #BF4D28;
 }
 
+.reveal section img {
+  border: none;
+}
+
 /* elements */
 
 .reveal .costs {

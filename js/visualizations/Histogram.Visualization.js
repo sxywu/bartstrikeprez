@@ -12,17 +12,22 @@ define([
     return function() {
         var data, domain = [],
             max = 750,
-            width,
+            width = 960,
             barWidth = 10,
             height = 325,
             barPadding = 2,
             padding = {top: 45, left: 75, right: 75},
             svg, groups, rects,
-            x, y, xAxis, yAxis, xAxisG, yAxisG;
+            x, y, xAxis, yAxis, xAxisG, yAxisG,
+            tip = d3.tip().attr('class', 'd3-tip')
+                .direction("n")
+                .html(function(d) {
+                    return d.name + ": " + d.bar;
+                });
 
         function Histogram(selection) {
             svg = d3.select(selection);
-            width = $(selection).width();
+            // width = $(selection).width();
 
             x = d3.scale.linear()
                     .domain(domain)
@@ -78,7 +83,10 @@ define([
                 .attr("y", function(d) {return height - y(d.bar)})
                 .attr("width", barWidth)
                 .attr("height", function(d) {return y(d.bar)})
-                .attr("fill", function(d) {return app.colors[d.name]});
+                .attr("fill", function(d) {return app.colors[d.name]})
+                .call(tip)
+                .on("mouseover", tip.show)
+                .on("mouseleave", tip.hide);
             return Histogram;
         }
 

@@ -12,14 +12,19 @@ define([
             svg, charts, keys,
             yMax = 0.08,
             yMin = 0,
-            width,
+            width = 960/2,
             height = 450,
             chartPadding = {right: 75, left: 150, top: 15, bottom: 45},
-            chartHeight = height / 3;
+            chartHeight = height / 3,
+            tip = d3.tip().attr('class', 'd3-tip')
+                .direction("n")
+                .html(function(d) {
+                    return "Year " + d.year + ": " + (d.rate * 100).toFixed(1) + "%";
+                });
 
         function lineChart(selection) {
             svg = d3.select(selection);
-            width = $(selection).width();
+            // width = $(selection).width();
 
             x = d3.scale.linear()
                 .domain([1, 4])
@@ -84,7 +89,10 @@ define([
                 .attr("cx", function(d, i) {return x(d.year)})
                 .attr("cy", function(d) {return y(d.rate)})
                 .attr("r", 4)
-                .attr("fill", function(d) {return app.colors[d.party]});
+                .attr("fill", function(d) {return app.colors[d.party]})
+                .call(tip)
+                .on("mouseover", tip.show)
+                .on("mouseleave", tip.hide);
 
         }
 

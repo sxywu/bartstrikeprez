@@ -12,20 +12,26 @@ define([
     return function() {
         var data, cost, titles = [],
             max = 110000,
-            width,
+            width = 960/2,
             barWidth = 13,
             height = 325,
             barPadding = .5,
             duration = 750,
             padding = {top: 45, left: 75, right: 75},
             svg, bars, rects, legend, line, circles,
-            x, y, xAxis, yAxis, xAxisG, yAxisG;
+            x, y, xAxis, yAxis, xAxisG, yAxisG,
+            tip = d3.tip().attr('class', 'd3-tip')
+                .direction("n")
+                .html(function(d) {
+                    console.log(d);
+                    return d.position + "<br>" + d.title + ": $" + d3.format(",f")(d.height);
+                });
 
         
 
         function stackedBar(selection) {
             svg = d3.select(selection);
-            width = $(selection).width();
+            // width = $(selection).width();
 
             console.log(width);
 
@@ -85,7 +91,10 @@ define([
                 .attr("height", function(d) {return y(d.height)})
                 .attr("opacity", function(d) {return d.opacity})
                 .attr("fill", function(d) {return app.colors[d.position]})
-                .attr("stroke", "none");
+                .attr("stroke", "none")
+                .call(tip)
+                .on("mouseover", tip.show)
+                .on("mouseleave", tip.hide);
 
             return stackedBar;
         }

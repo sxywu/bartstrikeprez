@@ -15,7 +15,7 @@ define([
             data = [],
             max = 105000,
             padding = {top: 25, left: 75, right: 75},
-            width, height = 275, x, y,
+            width = 960, height = 275, x, y,
             barWidth = 10
             barPadding = 2,
             tip = d3.tip().attr('class', 'd3-tip')
@@ -30,7 +30,7 @@ define([
         function CostsChart(selection) {
             svg = d3.select(selection);
             $svg = $(selection);
-            width = $svg.width();
+            // width = $svg.width();
 
             x = d3.scale.ordinal()
                     .domain(["1P1C", "1P2C", "1P3C", "2P1C", "2P2C", "2P3C"])
